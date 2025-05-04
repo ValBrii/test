@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ManageSpaces from "./ManageSpaces";
 import ManageUsers from "./ManageUsers";
 import AddUser from "./AddUser";
+import AddSpaceForm from "./AddSpaceForm";
 import "../index.css";
 
 const AdminDashboard = () => {
@@ -80,9 +81,18 @@ const AdminDashboard = () => {
           <>
             <h1>Welcome, Admin!</h1>
             <div className="summary">
-              <div>Total Spaces<br /><strong>{summary.totalSpaces} Listed</strong></div>
-              <div>Active Bookings<br /><strong>{summary.activeBookings} Ongoing</strong></div>
-              <div>Registered Users<br /><strong>{summary.registeredUsers} Members</strong></div>
+              <div>
+                Total Spaces<br />
+                <strong>{summary.totalSpaces} Listed</strong>
+              </div>
+              <div>
+                Active Bookings<br />
+                <strong>{summary.activeBookings} Ongoing</strong>
+              </div>
+              <div>
+                Registered Users<br />
+                <strong>{summary.registeredUsers} Members</strong>
+              </div>
             </div>
             <div className="listed-spaces">
               <h3>All Listed Spaces</h3>
@@ -100,12 +110,16 @@ const AdminDashboard = () => {
                 <tbody>
                   {spaces.map((space) => (
                     <tr key={space.id}>
-                      <td><img src={space.imageUrl} alt={space.title} /></td>
+                      <td>
+                        <img src={space.imageUrl} alt={space.title} />
+                      </td>
                       <td>{space.title}</td>
                       <td>{space.description}</td>
                       <td>{space.location}</td>
                       <td>{space.price}</td>
-                      <td><button onClick={() => handleEdit(space.id)}>Edit</button></td>
+                      <td>
+                        <button onClick={() => handleEdit(space.id)}>Edit</button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -117,6 +131,8 @@ const AdminDashboard = () => {
         return <ManageUsers />;
       case "addUser":
         return <AddUser />;
+      case "addSpace":
+        return <AddSpaceForm />;
       default:
         return <p>Page not found</p>;
     }
@@ -130,6 +146,7 @@ const AdminDashboard = () => {
           <li onClick={() => setCurrentView("dashboard")}>Dashboard</li>
           <li onClick={() => setCurrentView("manageUsers")}>View Users</li>
           <li onClick={() => setCurrentView("addUser")}>Add New User</li>
+          <li onClick={() => setCurrentView("addSpace")}>Add New Space</li>
         </ul>
       </div>
       <div className="main">{renderContent()}</div>
@@ -138,12 +155,3 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
-
-
-
-
-
-
-
-
-
