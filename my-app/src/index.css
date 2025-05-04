@@ -257,7 +257,7 @@ body {
 
 .submit-btn {
   padding: 12px;
-  background-color: #0056d2;
+  background-color: #102b66;
   color: white;
   border: none;
   border-radius: 6px;
@@ -338,5 +338,116 @@ form button:hover {
   font-size: 0.85rem;
   margin-top: -5px;
   margin-bottom: 10px;
+}
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh; /* Center vertically within main content */
+  padding: 20px;
+}
+
+.booking-container {
+  display: flex;
+  justify-content: center;
+  margin-top: -90px;
+  padding: 40px 20px;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+}
+
+.booking-form-wrapper {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  margin-top: 40px; /* Optional: Add space from the top */
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.booking-form input,
+.booking-form button {
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+}
+
+.booking-form button {
+  background-color: #102b66;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.booking-form button:hover {
+  background-color: #0056b3;
+}
+
+.error {
+  color: red;
+  font-size: 0.85em;
+  margin-top: -10px;
+}
+.invoice-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  box-sizing: border-box;
+  margin-top: -90px
+}
+
+.invoice-form-wrapper {
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  margin-top: 40px;
+}
+
+.invoice-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.invoice-form input,
+.invoice-form textarea,
+.invoice-form button {
+  padding: 10px;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.invoice-form button {
+  background-color: #102b66;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.invoice-form button:hover {
+  background-color: #0056b3;
+}
+
+.error {
+  color: red;
+  font-size: 0.9em;
 }
 

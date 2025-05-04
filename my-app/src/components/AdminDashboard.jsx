@@ -3,6 +3,8 @@ import ManageSpaces from "./ManageSpaces";
 import ManageUsers from "./ManageUsers";
 import AddUser from "./AddUser";
 import AddSpaceForm from "./AddSpaceForm";
+import CreateBooking from "./CreateBooking";
+import GenerateInvoice from "./GenerateInvoice";
 import "../index.css";
 
 const AdminDashboard = () => {
@@ -133,6 +135,10 @@ const AdminDashboard = () => {
         return <AddUser />;
       case "addSpace":
         return <AddSpaceForm />;
+      case "booking":
+        return <CreateBooking />;
+      case "billing":
+        return <GenerateInvoice />;
       default:
         return <p>Page not found</p>;
     }
@@ -147,6 +153,8 @@ const AdminDashboard = () => {
           <li onClick={() => setCurrentView("manageUsers")}>View Users</li>
           <li onClick={() => setCurrentView("addUser")}>Add New User</li>
           <li onClick={() => setCurrentView("addSpace")}>Add New Space</li>
+          <li onClick={() => setCurrentView("booking")}>Booking</li>
+          <li onClick={() => setCurrentView("billing")}>Billing & Invoicing</li>
         </ul>
       </div>
       <div className="main">{renderContent()}</div>
@@ -155,3 +163,4 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
