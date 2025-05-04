@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useFormik } from "formik";
+import { useNavigate } from "react-router-dom";
 import ManageSpaces from "./ManageSpaces";
+import ManageUsers from "./ManageUsers";
 import "../index.css";
 
 const AdminDashboard = () => {
@@ -12,6 +13,9 @@ const AdminDashboard = () => {
 
   const [spaces, setSpaces] = useState([]);
   const [editingSpaceId, setEditingSpaceId] = useState(null);
+  const [currentView, setCurrentView] = useState("dashboard");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSummary = async () => {
@@ -48,51 +52,6 @@ const AdminDashboard = () => {
     }
   };
 
-  const addSpaceForm = useFormik({
-    initialValues: {
-      title: "",
-      location: "",
-      price: "",
-    },
-    onSubmit: (values) => {
-      console.log("New Space:", values);
-    },
-  });
-
-  const registerForm = useFormik({
-    initialValues: {
-      fullName: "",
-      email: "",
-      role: "",
-    },
-    onSubmit: (values) => {
-      console.log("Register User:", values);
-    },
-  });
-
-  const bookingForm = useFormik({
-    initialValues: {
-      email: "",
-      space: "",
-      date: "",
-      time: "",
-    },
-    onSubmit: (values) => {
-      console.log("Booking:", values);
-    },
-  });
-
-  const invoiceForm = useFormik({
-    initialValues: {
-      email: "",
-      amount: "",
-      date: "",
-    },
-    onSubmit: (values) => {
-      console.log("Invoice:", values);
-    },
-  });
-
   const handleEdit = (spaceId) => {
     setEditingSpaceId(spaceId);
   };
@@ -106,68 +65,27 @@ const AdminDashboard = () => {
     refreshSpaces();
   };
 
-  return (
-    <div className="admin-panel">
-      <div className="sidebar">
-        <h2>Admin Panel</h2>
-        <ul>
-          <li>Dashboard</li>
-          <li>View All Spaces</li>
-          <li>Manage Users</li>
-          <li>Bookings</li>
-          <li>Billing & Invoicing</li>
-          <li>Logout</li>
-        </ul>
-      </div>
-      <div className="main">
-        <h1>Welcome, Admin!</h1>
-        <div className="summary">
-          <div>Total Spaces<br /><strong>{summary.totalSpaces} Listed</strong></div>
-          <div>Active Bookings<br /><strong>{summary.activeBookings} Ongoing</strong></div>
-          <div>Registered Users<br /><strong>{summary.registeredUsers} Members</strong></div>
-        </div>
+  const renderContent = () => {
+    if (editingSpaceId) {
+      return (
+        <ManageSpaces
+          selectedSpaceId={editingSpaceId}
+          onCancel={handleCancelEdit}
+          onSave={handleSaveEdit}
+        />
+      );
+    }
 
-        {!editingSpaceId ? (
+    switch (currentView) {
+      case "dashboard":
+        return (
           <>
-            <div className="forms">
-              <form onSubmit={addSpaceForm.handleSubmit} className="form-card">
-                <h3>Add New Space</h3>
-                <input name="title" onChange={addSpaceForm.handleChange} value={addSpaceForm.values.title} placeholder="Space Title" />
-                <input name="location" onChange={addSpaceForm.handleChange} value={addSpaceForm.values.location} placeholder="Location" />
-                <input name="price" type="number" onChange={addSpaceForm.handleChange} value={addSpaceForm.values.price} placeholder="Price per Day" />
-                <button type="submit">Add Space</button>
-              </form>
-
-              <form onSubmit={registerForm.handleSubmit} className="form-card">
-                <h3>Register New User</h3>
-                <input name="fullName" onChange={registerForm.handleChange} value={registerForm.values.fullName} placeholder="Full Name" />
-                <input name="email" onChange={registerForm.handleChange} value={registerForm.values.email} placeholder="Email Address" />
-                <select name="role" onChange={registerForm.handleChange} value={registerForm.values.role}>
-                  <option value="">Select Role</option>
-                  <option value="admin">Admin</option>
-                  <option value="user">User</option>
-                </select>
-                <button type="submit">Register User</button>
-              </form>
-
-              <form onSubmit={bookingForm.handleSubmit} className="form-card">
-                <h3>Create Booking</h3>
-                <input name="email" onChange={bookingForm.handleChange} value={bookingForm.values.email} placeholder="User Email" />
-                <input name="space" onChange={bookingForm.handleChange} value={bookingForm.values.space} placeholder="Space Name" />
-                <input name="date" type="date" onChange={bookingForm.handleChange} value={bookingForm.values.date} />
-                <input name="time" type="time" onChange={bookingForm.handleChange} value={bookingForm.values.time} />
-                <button type="submit">Book Now</button>
-              </form>
-
-              <form onSubmit={invoiceForm.handleSubmit} className="form-card">
-                <h3>Generate Invoice</h3>
-                <input name="email" onChange={invoiceForm.handleChange} value={invoiceForm.values.email} placeholder="User Email" />
-                <input name="amount" type="number" onChange={invoiceForm.handleChange} value={invoiceForm.values.amount} placeholder="Amount" />
-                <input name="date" type="date" onChange={invoiceForm.handleChange} value={invoiceForm.values.date} />
-                <button type="submit">Generate</button>
-              </form>
+            <h1>Welcome, Admin!</h1>
+            <div className="summary">
+              <div>Total Spaces<br /><strong>{summary.totalSpaces} Listed</strong></div>
+              <div>Active Bookings<br /><strong>{summary.activeBookings} Ongoing</strong></div>
+              <div>Registered Users<br /><strong>{summary.registeredUsers} Members</strong></div>
             </div>
-
             <div className="listed-spaces">
               <h3>All Listed Spaces</h3>
               <table>
@@ -182,8 +100,8 @@ const AdminDashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {spaces.map((space, index) => (
-                    <tr key={index}>
+                  {spaces.map((space) => (
+                    <tr key={space.id}>
                       <td><img src={space.imageUrl} alt={space.title} /></td>
                       <td>{space.title}</td>
                       <td>{space.description}</td>
@@ -196,15 +114,32 @@ const AdminDashboard = () => {
               </table>
             </div>
           </>
-        ) : (
-          <ManageSpaces selectedSpaceId={editingSpaceId} onCancel={handleCancelEdit} onSave={handleSaveEdit} />
-        )}
+        );
+      case "manageUsers":
+        return <ManageUsers />;
+      default:
+        return <p>Page not found</p>;
+    }
+  };
+
+  return (
+    <div className="admin-panel">
+      <div className="sidebar">
+        <h2>Admin Panel</h2>
+        <ul>
+          <li onClick={() => setCurrentView("dashboard")}>Dashboard</li>
+          <li onClick={() => setCurrentView("manageUsers")}>View Users</li>
+          <li onClick={() => navigate("/add-user")}>Add New User</li>
+        </ul>
       </div>
+      <div className="main">{renderContent()}</div>
     </div>
   );
 };
 
 export default AdminDashboard;
+
+
 
 
 

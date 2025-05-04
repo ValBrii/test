@@ -223,4 +223,49 @@ body {
 .user-table th {
   background-color: #f4f4f4;
 }
+.add-user-container {
+  max-width: 600px;
+  margin: 80px auto;
+  background: #fff;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.add-user-container h2 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.add-user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.add-user-form label {
+  font-weight: 600;
+}
+
+.add-user-form input,
+.add-user-form select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.submit-btn {
+  padding: 12px;
+  background-color: #0056d2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #0041a8;
+}
 
