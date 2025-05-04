@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import ManageSpaces from "./ManageSpaces";
 import ManageUsers from "./ManageUsers";
+import AddUser from "./AddUser";
 import "../index.css";
 
 const AdminDashboard = () => {
@@ -14,8 +14,6 @@ const AdminDashboard = () => {
   const [spaces, setSpaces] = useState([]);
   const [editingSpaceId, setEditingSpaceId] = useState(null);
   const [currentView, setCurrentView] = useState("dashboard");
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSummary = async () => {
@@ -117,6 +115,8 @@ const AdminDashboard = () => {
         );
       case "manageUsers":
         return <ManageUsers />;
+      case "addUser":
+        return <AddUser />;
       default:
         return <p>Page not found</p>;
     }
@@ -129,7 +129,7 @@ const AdminDashboard = () => {
         <ul>
           <li onClick={() => setCurrentView("dashboard")}>Dashboard</li>
           <li onClick={() => setCurrentView("manageUsers")}>View Users</li>
-          <li onClick={() => navigate("/add-user")}>Add New User</li>
+          <li onClick={() => setCurrentView("addUser")}>Add New User</li>
         </ul>
       </div>
       <div className="main">{renderContent()}</div>
@@ -138,6 +138,7 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
 
 
 

@@ -225,7 +225,7 @@ body {
 }
 .add-user-container {
   max-width: 600px;
-  margin: 80px auto;
+  margin: 20px auto;
   background: #fff;
   padding: 40px;
   border-radius: 12px;
@@ -268,4 +268,3 @@ body {
 .submit-btn:hover {
   background-color: #0041a8;
 }
-
